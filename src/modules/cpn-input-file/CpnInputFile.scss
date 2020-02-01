@@ -1,0 +1,190 @@
+@import "../../modules.variables.scss";
+
+.CpnInputFile {
+	display: block;
+	padding: 10px;
+
+	.preview {
+		display: flex;
+		position: relative;
+		min-height: 200px;
+
+		img {
+			width: 100%;
+			object-fit: cover;
+			height: 200px;
+			overflow: hidden;
+			border-radius: $borderRadius;
+		}
+
+		.filter {
+			position: absolute;
+			width: 100%;
+			height: 100%;
+			top: 0;
+			left: 0;
+			background: rgba($color: #fff, $alpha: 0.9);
+			color: $dark;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			cursor: pointer;
+			transform-origin: center center;
+			transform: scale(0.8);
+			transition: 0.3s ease;
+			opacity: 0;
+
+			svg {
+				height: 16px;
+				margin-right: 7px;
+
+				* {
+					fill: $dark;
+				}
+			}
+		}
+
+		&:hover {
+			.filter {
+				transform: scale(1);
+				opacity: 1;
+			}
+		}
+	}
+
+	.listReviews {
+		position: relative;
+        width: 100%;
+		margin: -5px;
+		min-height: 210px;
+
+		.dropzonePreviewMessage {
+			opacity: 1 !important;
+		}
+
+		.item {
+			display: inline-block;
+			align-items: center;
+			justify-content: center;
+			position: relative;
+			width: 130px;
+			height: 100px;
+			padding: 5px;
+			overflow: hidden;
+			clear: both;
+			border-radius: $borderRadius;
+
+			img {
+				width: 100%;
+				height: 100%;
+				border: 1px solid $borderColor;
+				object-fit: cover;
+				border-radius: $borderRadius;
+				box-sizing: border-box;
+				vertical-align: middle;
+			}
+
+			.btnRemove {
+				display: flex;
+				align-items: center;
+				justify-content: center;
+				position: absolute;
+				z-index: 2;
+				width: 20px;
+				height: 20px;
+				border-radius: $borderRadius;
+				background: $white;
+				padding: 2px;
+				cursor: pointer;
+				top: 10px;
+				right: -100px;
+				transition: 0.2s;
+
+				svg {
+					height: 10px;
+				}
+
+				&:hover {
+					box-shadow: 0px 0px 10px rgba($color: #000000, $alpha: 0.5);
+				}
+			}
+
+			.btnViewDetail {
+				display: flex;
+				align-items: center;
+				justify-content: center;
+				height: 30px;
+				background: rgba($color: #000000, $alpha: 0.5);
+				color: $white;
+				font-weight: 500;
+				width: calc(100% - 24px);
+				position: absolute;
+				z-index: 2;
+				bottom: -30px;
+				left: 50%;
+				transform: translateX(-50%);
+				border-radius: $borderRadius;
+				font-size: 12px;
+				cursor: pointer;
+				transition: 0.2s ease-in-out;
+
+				&:hover {
+					background: rgba($color: #000000, $alpha: 0.8);
+				}
+			}
+
+			&:hover {
+				.btnRemove {
+					right: 10px;
+				}
+
+				.btnViewDetail {
+					bottom: 12px;
+				}
+			}
+
+			.btnAddNewImage {
+                height: 100%;
+                display: flex;
+				justify-content: center;
+				align-items: center;
+				cursor: pointer;
+				border-radius: $borderRadius;
+                border: 1px dashed $grey;
+                user-select: none;
+
+				.message {
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    flex-direction: column;
+                    text-align: center;
+                    font-size: 0.8em;
+
+					svg {
+						height: 18px;
+						margin-bottom: 5px;
+					}
+				}
+
+				&:hover {
+					color: $primary;
+					border: 1px dashed $primary;
+
+					svg * {
+						fill: $primary;
+					}
+				}
+			}
+		}
+	}
+
+	&.empty {
+		.preview {
+			.filter {
+				opacity: 1;
+				transform: scale(1);
+			}
+		}
+	}
+}

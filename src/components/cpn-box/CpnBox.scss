@@ -1,0 +1,14 @@
+@import "../../modules.variables.scss";
+
+.CpnBox {
+	border-radius: $borderRadius;
+	border: 1px solid $borderColor;
+	background: $white;
+    padding: 20px;
+
+	.name {
+		font-size: 1.3em;
+        color: $primary;
+        margin-bottom: 15px;
+	}
+}

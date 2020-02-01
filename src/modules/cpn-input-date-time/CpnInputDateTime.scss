@@ -1,0 +1,147 @@
+@import "../../modules.variables.scss";
+
+.CpnInputDateTime {
+	display: inline-flex;
+
+	&.fullWidth {
+		width: 100%;
+
+		.react-datetime-picker__wrapper {
+			width: 100%;
+		}
+	}
+
+	.react-datetime-picker__calendar {
+		z-index: 100;
+	}
+
+	.react-datetime-picker__inputGroup__input:invalid {
+		background: none !important;
+		color: $danger !important;
+
+		&::placeholder {
+			color: $danger !important;
+		}
+	}
+
+	.react-datetime-picker__wrapper {
+		height: $inputHeight;
+		border: none;
+
+		.react-datetime-picker__inputGroup {
+			padding: 0 7px;
+
+			input,
+			.react-datetime-picker__inputGroup__leadingZero {
+				outline: none;
+				font-size: 1em;
+				color: $dark;
+				font-weight: 500;
+			}
+		}
+
+		button {
+			outline: none;
+
+			svg {
+				max-height: 16px;
+
+				* {
+					stroke: $dark;
+				}
+			}
+		}
+	}
+
+	.CpnInputDateTimeCalendar {
+		border-radius: $borderRadius;
+		color: $dark;
+		user-select: none;
+		@include borderBox;
+		box-shadow: $boxShadow;
+
+		.react-calendar__navigation {
+			border-bottom: 1px solid rgba($color: $dark, $alpha: 0.08);
+
+			button {
+				text-transform: capitalize;
+				font-size: 1em;
+
+				&:hover {
+					background: rgba($color: $dark, $alpha: 0.08);
+				}
+			}
+		}
+
+		.react-calendar__navigation__label {
+			font-weight: 400;
+			color: $dark;
+			font-size: 1em;
+		}
+
+		.react-calendar__month-view {
+			button {
+				text-transform: capitalize;
+				font-size: 1em;
+				font-weight: 400;
+				border: 1px solid rgba($color: $grey, $alpha: 0);
+
+				&:enabled:hover {
+					border: 1px solid $primary;
+					background: none;
+				}
+
+				&:disabled {
+					background: none !important;
+				}
+			}
+
+			.react-calendar__month-view__days__day--weekend {
+				color: $danger;
+			}
+
+			.react-calendar__month-view__days__day--neighboringMonth {
+				background: rgba($color: $primary, $alpha: 0.05);
+				color: $grey;
+			}
+
+			.react-calendar__tile--active {
+				background: $primary !important;
+				color: $white !important;
+				cursor: default !important;
+
+				&:hover {
+					background: $primary !important;
+					color: $white !important;
+				}
+			}
+
+			.react-calendar__tile {
+				&.react-calendar__tile--now {
+					color: $primary;
+
+					&:enabled:hover {
+						border: 1px solid $primary;
+						background: none;
+					}
+				}
+			}
+		}
+	}
+
+	&.react-datetime-picker--disabled {
+		background: none;
+		overflow: hidden;
+		cursor: default;
+
+		.react-datetime-picker__wrapper {
+			border-color: rgba($color: $dark, $alpha: 0);
+		}
+	}
+}
+
+.CpnInputDateTimeRange {
+	.CpnInput:first-child {
+		margin-right: 10px;
+	}
+}

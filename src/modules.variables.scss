@@ -1,0 +1,89 @@
+// ============================ Required Core style ================================
+$primary: #2b50ed;
+$success: #59d624;
+$info: #00d2fc;
+$warning: #f98d00;
+$danger: #ea2f2c;
+
+$white: #fff;
+$light: #f1f5f5;
+$dark: #2f3542;
+$grey: #57606f;
+
+// Layout
+$borderRadius: 5px;
+$boxShadow: 0px 2px 7px
+	rgba(
+		$color: #000000,
+		$alpha: 0.17
+	);
+
+$borderColor: #e0e0e0;
+$inputHeight: 38px;
+$buttonHeight: 38px;
+
+$zIndexListSuggests: 102;
+$zIndexCpnTableLoadingData: 103;
+$zIndexCpnPopupFileManage: 200;
+
+// Mixin Styles
+@mixin borderBox {
+	border: 1px solid #e0e0e0;
+}
+
+@mixin btnStyle {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	font-size: 1em;
+	font-weight: 400;
+	outline: none;
+	height: $buttonHeight;
+	padding: 0 15px;
+	border-radius: $borderRadius;
+	cursor: pointer;
+	outline: none;
+
+	svg {
+		height: 12px;
+		margin-right: 7px;
+	}
+}
+
+@mixin btnDarkColor($color) {
+	@include btnStyle;
+
+	background: $color;
+	border: 1px solid $color;
+	color: $white;
+	transition: 0.25s ease;
+
+	svg * {
+		fill: $white;
+	}
+
+	&:hover {
+		background: none;
+		color: $color;
+
+		svg * {
+			fill: $color;
+		}
+	}
+}
+
+@mixin btnOutlineColor($color) {
+	@include btnStyle;
+
+	background: none;
+	border: 1px solid $color;
+	color: $color;
+	transition: 0.25s ease;
+	opacity: 0.7;
+
+	&:hover {
+		opacity: 1;
+	}
+}
+
+// ============================ End Required Core style ============================

@@ -1,0 +1,525 @@
+@import "../../modules.variables.scss";
+
+.CpnTable {
+	.CpnTable__Head {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		user-select: none;
+		padding-bottom: 10px;
+
+		.totalResults {
+			font-size: 1em;
+			color: $grey;
+		}
+
+		.CpnTable__Toolbar {
+			display: inline-flex;
+			align-items: center;
+		}
+
+		.buttons {
+			display: inline-flex;
+			align-items: center;
+			justify-content: flex-end;
+			margin-left: 10px;
+
+			.btnCreate {
+				@include btnDarkColor($primary);
+			}
+
+			.item {
+				height: $buttonHeight;
+				width: 42px;
+				border-radius: $borderRadius;
+				display: inline-flex;
+				align-items: center;
+				justify-content: center;
+				cursor: pointer;
+				font-weight: 400;
+				border: 1px solid $borderColor;
+				position: relative;
+
+				svg {
+					height: 14px;
+
+					* {
+						fill: $grey;
+					}
+				}
+
+				&:hover {
+					border-color: $primary;
+
+					svg {
+						* {
+							fill: $primary;
+						}
+					}
+				}
+
+				&.active {
+					border-color: $primary;
+					box-shadow: 0px 0px 2px 2px rgba($color: $primary, $alpha: 0.2);
+
+					&:hover {
+						border-color: $primary;
+					}
+
+					svg {
+						* {
+							fill: $primary;
+						}
+					}
+				}
+
+				&.filter {
+					.qty {
+						position: absolute;
+						top: 4px;
+						right: 4px;
+						width: 15px;
+						height: 15px;
+						color: $white;
+						background: $primary;
+						border-radius: 50%;
+						font-weight: 600;
+						display: flex;
+						align-items: center;
+						justify-content: center;
+						font-size: 0.7em;
+					}
+				}
+			}
+		}
+	}
+
+	.CpnTable__Content {
+		width: 100%;
+		border-radius: $borderRadius;
+		position: relative;
+
+		@include borderBox;
+
+		.CpnTableLoadingData {
+			position: absolute;
+			bottom: 0;
+			left: 0;
+			width: 100%;
+			height: 100%;
+			background: rgba($color: $white, $alpha: 0.95);
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			z-index: $zIndexCpnTableLoadingData;
+			border-radius: $borderRadius;
+
+			p {
+				margin-left: 7px;
+			}
+		}
+
+		table {
+			width: 100%;
+			border-collapse: collapse;
+			background: none;
+
+			tbody:last-child {
+				tr:last-child {
+					td {
+						border-bottom: 0;
+					}
+
+					td:first-child {
+						border-bottom-left-radius: $borderRadius;
+						overflow: hidden;
+					}
+
+					td:last-child {
+						border-bottom-right-radius: $borderRadius;
+						overflow: hidden;
+					}
+				}
+			}
+
+			thead {
+				tr {
+					th:first-child {
+						border-top-left-radius: $borderRadius;
+						overflow: hidden;
+					}
+
+					th:last-child {
+						border-top-right-radius: $borderRadius;
+						overflow: hidden;
+					}
+
+					&:first-child {
+						th {
+							border-bottom: 1px solid $borderColor;
+						}
+					}
+				}
+
+				// ============================ SORT STYLE ================================
+				.sortBy {
+					padding-right: 18px;
+					position: relative;
+					cursor: pointer;
+
+					&:before,
+					&:after {
+						border: 4px solid transparent;
+						content: "";
+						display: block;
+						height: 0;
+						right: 5px;
+						top: 50%;
+						position: absolute;
+						width: 0;
+					}
+
+					&:before {
+						border-bottom-color: $grey;
+						margin-top: -9px;
+					}
+
+					&:after {
+						border-top-color: $grey;
+						margin-top: 1px;
+					}
+
+					&.increase {
+						&:before {
+							border-bottom-color: $dark;
+						}
+					}
+
+					&.descrease {
+						&:after {
+							border-top-color: $dark;
+						}
+					}
+				}
+				// ============================ End SORT STYLE ============================
+			}
+
+			td,
+			th {
+				padding: 15px 7px;
+				max-width: 300px;
+			}
+
+			th {
+				text-align: left;
+				user-select: none;
+				font-weight: 600;
+				color: $dark;
+			}
+
+			td {
+				color: $dark;
+				font-weight: 400;
+			}
+
+			tbody {
+				tr {
+					&:hover {
+						td {
+							background: rgba($color: $primary, $alpha: 0.05);
+						}
+					}
+				}
+			}
+
+			tbody {
+				tr.table-filter {
+					td {
+						background: $white;
+					}
+				}
+			}
+
+			tr.CpnTable__RowMeta {
+				td {
+					background: none !important;
+					border-top: 0;
+					border-bottom: 0;
+				}
+
+				&.CpnTable__EmptyRow {
+					td {
+						height: 15px;
+					}
+				}
+			}
+		}
+	}
+
+	.CpnTable__CpnFilter {
+		.CpnInput {
+			width: 100%;
+			
+
+			input {
+				background: none;
+			}
+		}
+
+		.CpnInputDateTimeRange {
+			.CpnInput:first-child {
+				margin-bottom: 15px;
+			}
+		}
+	}
+
+	.CpnTable__CpnPagination {
+		display: flex;
+		width: 100%;
+		align-items: center;
+		justify-content: space-between;
+		user-select: none;
+		color: $grey;
+		padding-top: 10px;
+
+		.itemsPerPageControler {
+			flex: 1;
+			width: 100%;
+
+			select {
+				height: 38px;
+				background: none;
+				color: $grey;
+				font-size: 1rem;
+				font-weight: 500;
+				box-shadow: none;
+				outline: none;
+				border: 0;
+				margin: 0 7px;
+				background: $white;
+				border: 1px solid $borderColor;
+				background: none;
+			}
+		}
+
+		.InfoPage {
+			padding: 0px 10px;
+		}
+
+		.actions {
+			display: flex;
+			align-items: center;
+			border-radius: $borderRadius;
+			border: 1px solid $borderColor;
+			overflow: hidden;
+
+			.select-page {
+				margin: 0 5px;
+
+				select {
+					width: 100%;
+					height: 38px;
+					background: none;
+					color: $grey;
+					font-size: 1rem;
+					font-weight: 500;
+					box-shadow: none;
+					outline: none;
+					border: 0;
+				}
+			}
+
+			.btnPrev,
+			.btnNext {
+				min-height: 38px;
+				width: 45px;
+				display: flex;
+				align-items: center;
+				justify-content: center;
+				cursor: pointer;
+
+				&.disabled {
+					cursor: default;
+					opacity: 0.2;
+
+					&:hover {
+						background: none;
+
+						svg {
+							* {
+								fill: $grey;
+							}
+						}
+					}
+				}
+
+				&:hover {
+					background: $primary;
+
+					svg {
+						* {
+							fill: $white;
+						}
+					}
+				}
+
+				svg {
+					height: 16px;
+
+					* {
+						fill: $grey;
+					}
+				}
+			}
+		}
+	}
+
+	.CpnTable__CpnSearch {
+		position: relative;
+		width: 500px;
+
+		.loadingSuggests {
+			margin-left: -60px;
+			top: -3px;
+
+			> div {
+				background: $grey;
+			}
+		}
+
+		.CpnSearchInput {
+			width: 100%;
+			position: relative;
+			display: inline-flex;
+			opacity: 1;
+			border: 1px solid $borderColor;
+			height: 38px;
+			border-radius: $borderRadius;
+
+			.loadingSuggests {
+				margin-left: -60px;
+				top: -3px;
+
+				> div {
+					background: $grey;
+				}
+			}
+
+			input {
+				width: 100%;
+				outline: none;
+				height: 38px;
+				border-radius: $borderRadius;
+				border: 1px solid rgba($color: #000000, $alpha: 0);
+				font-size: 1em;
+				color: $grey;
+				padding: 0 7px;
+				font-weight: 500;
+				background: none;
+				color: $dark;
+
+				&::placeholder {
+					color: rgba($color: $grey, $alpha: 0.5);
+				}
+			}
+
+			.btnClear {
+				display: inline-flex;
+				align-items: center;
+				justify-content: center;
+				position: absolute;
+				top: 50%;
+				right: 5px;
+				transform: translateY(-50%);
+				padding: 10px;
+				cursor: pointer;
+
+				svg {
+					height: 10px;
+
+					* {
+						fill: $grey;
+					}
+				}
+			}
+
+			&.isFocus,
+			&.isHasValue {
+				opacity: 1;
+
+				border-color: $primary;
+				box-shadow: 0px 0px 2px 2px rgba($color: $primary, $alpha: 0.2);
+			}
+
+			&.isShowIcon {
+				.iconSearch {
+					position: absolute;
+					top: 52%;
+					left: 12px;
+					transform: translateY(-50%);
+
+					svg {
+						height: 12px;
+
+						* {
+							fill: $grey;
+						}
+					}
+				}
+
+				input {
+					padding-left: 35px;
+				}
+			}
+		}
+
+		.listSuggests {
+			position: absolute;
+			top: calc(100% + 3px);
+			left: 0;
+			width: 100%;
+			height: max-content;
+			background: $white;
+			z-index: $zIndexListSuggests;
+			border-radius: $borderRadius;
+			max-height: 50vh;
+			overflow-y: auto;
+			box-shadow: $boxShadow;
+
+			.item {
+				display: flex;
+				align-items: center;
+				height: 35px;
+				padding: 0 10px;
+				user-select: none;
+				color: $dark;
+				font-weight: 500;
+				cursor: pointer;
+
+				&.selected,
+				&:hover {
+					background: rgba($color: #000000, $alpha: 0.05);
+				}
+			}
+		}
+	}
+
+	.CpnTable__Message {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		padding: 15px;
+
+		svg {
+			height: 15px;
+
+			* {
+				fill: $dark;
+			}
+		}
+
+		.message {
+			margin-left: 5px;
+		}
+	}
+}

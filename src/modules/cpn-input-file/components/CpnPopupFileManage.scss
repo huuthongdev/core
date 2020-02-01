@@ -1,0 +1,339 @@
+@import "../../../modules.variables.scss";
+
+.CpnPopupFileManage {
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background: rgba($color: #000000, $alpha: 0.7);
+	z-index: $zIndexCpnPopupFileManage;
+	overflow: auto;
+	padding-bottom: 100px;
+
+	.CpnPopupFileManage__Box {
+		position: relative;
+		background: $white;
+		width: 800px;
+		max-width: 100%;
+		top: 20px;
+		left: 50%;
+		transform: translateX(-50%);
+		border-radius: $borderRadius;
+		box-shadow: $boxShadow;
+
+		.CpnPopupFileManage__Tab {
+			display: flex;
+			align-items: center;
+			user-select: none;
+			border-bottom: 1px solid rgba($color: #000000, $alpha: 0.1);
+			position: relative;
+			padding-right: 50px;
+
+			.item {
+				height: 38px;
+				display: flex;
+				align-items: center;
+				justify-content: center;
+				padding: 0 15px;
+				cursor: pointer;
+				font-weight: 500;
+
+				svg {
+					height: 12px;
+					margin-right: 5px;
+
+					* {
+						fill: $dark;
+					}
+				}
+
+				&.active {
+					background: rgba($color: $primary, $alpha: 0.1);
+					color: $primary;
+
+					svg {
+						* {
+							fill: $primary;
+						}
+					}
+				}
+			}
+
+			.btnClose {
+				position: absolute;
+				height: 32px;
+				width: 32px;
+				display: flex;
+				align-items: center;
+				justify-content: center;
+				top: 4px;
+				right: 4px;
+				cursor: pointer;
+				transition: 0.2s ease-in-out;
+
+				svg {
+					height: 12px;
+				}
+
+				&:hover {
+					background: rgba($color: #000000, $alpha: 0.05);
+					border-radius: 50%;
+				}
+			}
+		}
+
+		.CpnPopupFileManage__Content {
+			padding: 15px;
+
+			.btnActions {
+				display: flex;
+				align-items: center;
+				justify-content: center;
+				margin-top: 10px;
+
+				> * {
+					height: 38px;
+					border-radius: $borderRadius;
+					margin-right: 5px;
+					display: flex;
+					align-items: center;
+					justify-content: center;
+					padding: 0 25px;
+					border: none;
+					outline: none;
+					user-select: none;
+					font-weight: 500;
+					cursor: pointer;
+					font-size: 1em;
+
+					&.submit {
+						background: $primary;
+						color: $white;
+					}
+
+					&.loading {
+						cursor: default;
+						height: 100px;
+
+						p {
+							margin-left: 5px;
+						}
+					}
+				}
+			}
+
+			.listImages {
+				position: relative;
+				width: 100%;
+				padding: 5px;
+
+				.dropzonePreviewMessage {
+					opacity: 1 !important;
+				}
+
+				.item {
+					display: inline-block;
+					align-items: center;
+					justify-content: center;
+					position: relative;
+					width: calc(100% / 5);
+					min-height: 100px;
+					padding: 5px;
+					overflow: hidden;
+					clear: both;
+					border-radius: $borderRadius;
+
+					img {
+						width: 100%;
+						height: 150px;
+						border: 1px solid $borderColor;
+						object-fit: cover;
+						border-radius: $borderRadius;
+						box-sizing: border-box;
+						vertical-align: middle;
+					}
+
+					.btnRemove {
+						display: flex;
+						align-items: center;
+						justify-content: center;
+						position: absolute;
+						z-index: 2;
+						width: 20px;
+						height: 20px;
+						border-radius: $borderRadius;
+						background: $white;
+						padding: 2px;
+						cursor: pointer;
+						top: 10px;
+						right: -100px;
+						transition: 0.2s;
+
+						svg {
+							height: 10px;
+						}
+
+						&:hover {
+							box-shadow: 0px 0px 10px rgba($color: #000000, $alpha: 0.5);
+						}
+					}
+
+					.btnViewDetail {
+						display: flex;
+						align-items: center;
+						justify-content: center;
+						height: 30px;
+						background: rgba($color: #000000, $alpha: 0.5);
+						color: $white;
+						font-weight: 500;
+						width: calc(100% - 24px);
+						position: absolute;
+						z-index: 2;
+						bottom: -30px;
+						left: 50%;
+						transform: translateX(-50%);
+						border-radius: $borderRadius;
+						font-size: 12px;
+						cursor: pointer;
+						transition: 0.2s ease-in-out;
+
+						&:hover {
+							background: rgba($color: #000000, $alpha: 0.8);
+						}
+					}
+
+					&:hover {
+						.btnRemove {
+							right: 10px;
+						}
+
+						.btnViewDetail {
+							bottom: 12px;
+						}
+					}
+
+					&.recentUploaded {
+						cursor: pointer;
+
+						img:hover {
+							border-color: $primary;
+							box-shadow: 0px 0px 2px 2px rgba($color: $primary, $alpha: 0.2);
+						}
+					}
+				}
+
+				.cpnDropZone {
+					width: 100%;
+					height: 150px;
+					justify-content: center;
+					align-items: center;
+					display: flex;
+					cursor: pointer;
+					border-radius: $borderRadius;
+					border: unset;
+					min-height: unset;
+				}
+
+				.btnAddNewImage {
+					width: 100%;
+					height: 150px;
+					justify-content: center;
+					align-items: center;
+					display: flex;
+					cursor: pointer;
+					border-radius: $borderRadius;
+					border: 1px dashed $grey;
+
+					svg {
+						height: 12px;
+						margin-right: 5px;
+					}
+
+					img {
+						background: none;
+					}
+
+					&:hover {
+						color: $primary;
+						border: 1px dashed $primary;
+
+						svg * {
+							fill: $primary;
+						}
+					}
+				}
+			}
+		}
+	}
+}
+
+// ============================ CPN DROPZONE STYLE ================================
+.cpnDropZone {
+	display: inline-flex;
+	position: relative;
+	min-height: 300px;
+	width: 100%;
+	max-width: 100%;
+	max-height: 100%;
+	outline: none;
+	border-radius: $borderRadius;
+	overflow: hidden;
+
+	img {
+		width: 100%;
+		height: 100%;
+		max-height: 300px;
+		object-fit: contain;
+	}
+
+	input {
+		outline: none;
+	}
+
+	&.hasImage {
+		min-height: unset;
+		min-width: unset;
+		background: rgba($color: #000000, $alpha: 0.1);
+
+		.dropzonePreviewMessage {
+			opacity: 0;
+		}
+	}
+
+	.dropzonePreviewMessage {
+		opacity: 1;
+		position: absolute;
+		display: flex;
+		width: 100%;
+		height: 100%;
+		justify-content: center;
+		align-items: center;
+		border: 1px dashed $dark;
+		border-radius: $borderRadius;
+		cursor: pointer;
+		background: rgba($color: $white, $alpha: 0.95);
+		text-align: center;
+		padding: 15px;
+		flex-direction: column;
+
+		svg {
+			width: 20px;
+			margin-bottom: 10px;
+		}
+	}
+
+	&.isDragActive,
+	&:hover {
+		.dropzonePreviewMessage {
+			opacity: 1;
+			border: 1px dashed $primary;
+			color: $primary;
+
+			svg * {
+				fill: $primary;
+			}
+		}
+	}
+}
+// ============================ End CPN DROPZONE STYLE ============================

@@ -1,0 +1,164 @@
+@import "../../modules.variables.scss";
+
+.CpnForm {
+	.CpnInputCheckbox {
+		margin-bottom: 15px;
+	}
+
+	.actions {
+		display: flex;
+		align-items: center;
+		justify-content: flex-end;
+
+		button[type="submit"] {
+			@include btnDarkColor($primary);
+
+			&:disabled {
+				cursor: default;
+				background: rgba($color: #000000, $alpha: 0.05);
+				color: $dark;
+				border: none;
+			}
+		}
+
+		button.buttonClose {
+			@include btnOutlineColor($grey);
+			margin-right: 7px;
+		}
+
+		.loading {
+			@include btnStyle;
+			cursor: default;
+		}
+	}
+}
+
+// ============================ Cpn Input style ================================
+.CpnInput {
+	display: inline-flex;
+	flex-direction: column;
+	width: 100%;
+	margin-bottom: 15px;
+
+	.Label {
+		user-select: none;
+		color: rgba($color: $dark, $alpha: 0.5);
+		transition: 0.2s ease;
+		font-size: 0.9em;
+		margin-bottom: 4px;
+	}
+
+	.Input {
+		@include borderBox;
+
+		width: 100%;
+		border-radius: $borderRadius;
+
+		> input {
+			height: $inputHeight;
+			background-color: none;
+			border: none;
+			outline: none;
+			border-radius: $borderRadius;
+			font-size: 1em;
+			font-weight: 400;
+			padding: 0px 10px;
+			width: 100%;
+		}
+
+		textarea {
+			height: $inputHeight * 2;
+			background-color: none;
+			border: none;
+			outline: none;
+			border-radius: $borderRadius;
+			font-size: 1em;
+			font-weight: 400;
+			padding: 10px;
+			width: 100%;
+		}
+	}
+
+	.ErrorMessage {
+		color: $danger;
+		font-size: 0.75em;
+		margin-top: 5px;
+		font-weight: 500;
+	}
+
+	&.error {
+		border-color: $danger;
+
+		.Label {
+			color: $danger;
+		}
+
+		.Input {
+			border-color: $danger;
+		}
+	}
+
+	&.focus {
+		border-color: $primary;
+
+		.Label {
+			color: $primary;
+		}
+
+		.Input {
+			border-color: $primary;
+		}
+	}
+
+	&.disabled {
+		.Input {
+			border-color: rgba($color: #000000, $alpha: 0);
+			user-select: none;
+			position: relative;
+
+			&:after {
+				cursor: default;
+				content: "";
+				position: absolute;
+				top: 0;
+				left: 0;
+				width: 100%;
+				height: 100%;
+				background: rgba($color: #000000, $alpha: 0.05);
+				border-radius: $borderRadius;
+			}
+
+			.Label {
+				background: none;
+			}
+
+			input {
+				color: $dark;
+			}
+
+			// ============================ Related style ================================
+			.CpnInputSelect__single-value--is-disabled,
+			.CpnInputSelectAsync__single-value--is-disabled {
+				color: $dark;
+			}
+
+			.react-datetime-picker__clear-button,
+			.react-datetime-picker__calendar-button,
+			.CpnInputSelect__indicators,
+			.CpnInputSelectAsync__indicators {
+				display: none;
+			}
+			// ============================ End Related style ============================
+		}
+	}
+
+	.CpnInputDateTime {
+		display: flex;
+		width: 100%;
+
+		.react-datetime-picker__wrapper {
+			width: 100%;
+		}
+	}
+}
+// ============================ End Cpn Input style ============================

@@ -1,0 +1,97 @@
+@import "../../modules.variables.scss";
+
+.AuthScreen {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	height: 100%;
+	width: 100%;
+
+	.box {
+		width: 400px;
+		max-width: 100%;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		padding: 15px;
+		flex-direction: column;
+
+		.logo {
+			margin-bottom: 25px;
+
+			svg {
+				width: 200px;
+			}
+		}
+
+		form {
+			@include borderBox;
+			padding: 20px;
+			width: 100%;
+			flex: 1;
+			border-radius: $borderRadius;
+			background: $white;
+
+			.formGroup {
+				width: 100%;
+				margin-bottom: 25px;
+				display: flex;
+				position: relative;
+
+				input {
+					height: $inputHeight;
+					border-radius: $borderRadius;
+					padding: 0 10px;
+					background: none;
+					width: 100%;
+					outline: none;
+					font-size: 1em;
+					color: $dark;
+
+					@include borderBox;
+
+					&:focus {
+						border-color: $primary;
+						box-shadow: 0 0 0 2px rgba($color: $primary, $alpha: 0.2);
+					}
+
+					&::placeholder {
+						color: $grey;
+						font-weight: 300;
+					}
+				}
+
+				.ErrorMessage {
+					position: absolute;
+					top: $inputHeight;
+					padding-top: 5px;
+					color: $danger;
+					font-size: 0.9em;
+				}
+
+				.icon {
+					position: absolute;
+					top: 50%;
+					transform: translateY(-50%);
+					right: 0;
+					width: 40px;
+					display: flex;
+					align-items: center;
+					justify-content: center;
+
+					svg {
+						height: 15px;
+
+						* {
+							fill: $grey;
+						}
+					}
+				}
+			}
+
+			button[type="submit"] {
+				width: 100%;
+			}
+		}
+	}
+}

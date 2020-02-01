@@ -1,0 +1,40 @@
+@import "../../modules.variables.scss";
+
+.CpnInputSelect {
+	.CpnInputSelect__control {
+		border: none;
+		box-shadow: none;
+		background: none;
+
+		.CpnInputSelect__indicator-separator {
+			display: none;
+		}
+
+		.CpnInputSelect__clear-indicator {
+			padding-left: 0;
+			padding-right: 0;
+		}
+
+		.CpnInputSelect__indicator {
+			cursor: pointer;
+		}
+	}
+
+	.CpnInputSelect__menu {
+		z-index: 10;
+
+		.CpnInputSelect__menu-list {
+			.CpnInputSelect__option {
+				&:hover {
+					background: rgba($color: #000000, $alpha: 0.05);
+					color: $dark;
+				}
+			}
+
+			.CpnInputSelect__option--is-focused {
+				background: rgba($color: #000000, $alpha: 0.05);
+				color: $dark;
+			}
+		}
+	}
+}

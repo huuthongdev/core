@@ -1,0 +1,48 @@
+@import '../../modules.variables.scss';
+
+.CpnButton {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	height: $buttonHeight;
+	padding: 0 25px;
+	outline: none;
+	user-select: none;
+	cursor: pointer;
+	border-radius: $borderRadius;
+	background: none;
+	font-size: 1em;
+	font-weight: 500;
+	outline: none;
+	text-decoration: none;
+
+	&.dark {
+		@include btnDarkColor($dark);
+	}
+
+	&.info {
+		@include btnDarkColor($info);
+	}
+
+	&.danger {
+		@include btnDarkColor($danger);
+	}
+
+	&.success {
+		@include btnDarkColor($success);
+	}
+
+	&.primary {
+		@include btnDarkColor($primary);
+	}
+
+	&.outlineDark {
+		@include btnOutlineColor($dark);
+	}
+}
+
+.CpnButton_Wraper_Middle {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}

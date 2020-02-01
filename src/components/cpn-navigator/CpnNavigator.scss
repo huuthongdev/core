@@ -1,0 +1,113 @@
+@import '../../modules.variables.scss';
+
+$NavigatorWidth: 220px;
+
+.CpnWraper {
+    padding: 30px;
+    padding-left: $NavigatorWidth + 30px;
+}
+
+.CpnNavigator {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: $NavigatorWidth;
+    height: 100%;
+    background: $white;
+    overflow: auto;
+    padding: 20px;
+    border-right: 1px solid $borderColor;
+    display: flex;
+    flex-direction: column;
+
+    .userInformation {
+        display: flex;
+        margin-bottom: 25px;
+        align-items: center;
+
+        img.avatar {
+            object-fit: cover;
+            height: 35px;
+            width: 35px;
+            border-radius: 50%;
+            background: $grey;
+            margin-right: 10px;
+        }
+
+        .name {
+            font-weight: 500;
+            margin-bottom: 3px;
+        }
+
+        .role {
+            color: rgba($color: $dark, $alpha: 0.5);
+            font-size: 0.9em;
+        }
+    }
+
+    .menu {
+        flex: 1;
+        height: 100%;
+
+        .groupLabel {
+            color: rgba($color: $dark, $alpha: 0.5);
+            font-size: 0.9em;
+            margin: 20px 0;
+        }
+
+        .item {
+            display: flex;
+            align-items: center;
+            height: 45px;
+            margin-bottom: 10px;
+            padding: 10px 15px;
+            border-radius: $borderRadius;
+            cursor: pointer;
+
+            svg {
+                width: 15px;
+                margin-right: 10px;
+
+                * {
+                    fill: $dark;
+                }
+            }
+
+            &:hover {
+                background: rgba($color: #000000, $alpha: 0.05);
+            }
+
+            &.active {
+                color: $white;
+                background: $primary;
+
+                svg * {
+                    fill: $white;
+                }
+            }
+        }
+    }
+
+    .btnLogout {
+        height: 32px;
+        border-radius: $borderRadius;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        opacity: 0.7;
+        cursor: pointer;
+
+        svg {
+            height: 16px;
+            margin-right: 7px;
+
+            * {
+                fill: $dark;
+            }
+        }
+
+        &:hover {
+            opacity: 1;
+        }
+    }
+}
