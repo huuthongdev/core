@@ -17,14 +17,6 @@ interface IField {
     validate?: any,
     defaultValue?: any,
     input: (state: ICpnInputCustomState, formProps: FormikProps<any>) => ReactElement,
-    // ============================ Input file ============================
-    maxLength?: number,
-    // ============================ Currency ============================
-    max?: number,
-    // ============================ Selects ============================
-    options?: ICpnInputSelectOption[],
-    loadSyncOptions?: (formProps: FormikProps<any>) => ICpnInputSelectOption[],
-    loadOptions?: (inputValue: string, callback: (options: OptionsType<OptionTypeBase>) => void, formProps: FormikProps<any>) => void | Promise<any>,
     disabled?: boolean,
     onChange?: (value: any) => void,
 }
@@ -119,7 +111,7 @@ export const CpnForm: FC<CpnFormProps> = (props) => {
                     return <Form className="form">
                         <div className="row">
                             {structure.map((fieldProps, key) => {
-                                const { col, name, label } = fieldProps;
+                                const { col, name, label, isVisible } = fieldProps;
 
                                 const fieldGeneralProps = {
                                     label,
@@ -132,6 +124,8 @@ export const CpnForm: FC<CpnFormProps> = (props) => {
                                     errorMessage: getIn(formProps.touched, name) ? getIn(formProps.errors, name) : '',
                                     defaultValue: fieldProps.defaultValue,
                                 }
+
+                                if (isVisible === false) return null
 
                                 return <div className={`col-${col || 12}`} key={key}>
                                     <CpnInput
