@@ -1,47 +1,11 @@
-import React, { FC, ReactElement, useState, Fragment } from 'react'
+import React, { FC, useState, Fragment } from 'react'
 
-import * as Yup from 'yup';
-import { Formik, Form, getIn, FormikProps } from 'formik';
-import { OptionsType, OptionTypeBase } from 'react-select';
+import { useForm } from '.';
+import { CpnIcon } from '../cpn-icon';
+import { ClassNames, ObjectUtils } from '..';
 
 import './CpnForm.scss';
-import { ClassNames } from '..';
-import { CpnIcon } from '../cpn-icon';
-import { ICpnInputSelectOption, IButtonProps } from '../types';
-
-interface IField {
-    isVisible?: boolean,
-    label: string,
-    name: string,
-    col?: number,
-    validate?: any,
-    defaultValue?: any,
-    input: (state: ICpnInputCustomState, formProps: FormikProps<any>) => ReactElement,
-    disabled?: boolean,
-    onChange?: (value: any) => void,
-}
-
-interface ICpnInputCustomState {
-    onChange: (value: any) => void,
-    onFocus: () => void,
-    onBlur: () => void,
-    defaultValue?: any,
-    className?: string,
-    disabled?: boolean,
-}
-
-type CpnInputProps = {
-    onChange: (value: any) => void;
-    formProps: FormikProps<any>,
-    fieldProps: IField,
-    defaultValue?: any,
-    className?: string,
-    disabled?: boolean,
-    // ============================ Input Related ============================
-    label?: string,
-    errorMessage?: string,
-    input: (state: ICpnInputCustomState, formProps: FormikProps<any>) => ReactElement,
-}
+import { CpnInputProps, CpnFormProps } from './CpnForm.types';
 
 const CpnInput: FC<CpnInputProps> = (props) => {
     const [isFocus, setIsFocus] = useState(false);
@@ -55,7 +19,7 @@ const CpnInput: FC<CpnInputProps> = (props) => {
         disabled: props.disabled,
     })}>
         {props.label ? <div className="Label">{props.label}</div> : null}
-        
+
         <div className="Input">
             {props.input({
                 onChange: (value: any) => props.onChange(value),
@@ -71,101 +35,80 @@ const CpnInput: FC<CpnInputProps> = (props) => {
     </div>
 }
 
-type CpnFormProps = {
-    handleSubmit: (values: any) => Promise<any>,
-    structure: IField[],
-    className?: string,
-    labelSubmit?: string,
-    buttonClose?: IButtonProps,
-    isDebug?: boolean,
-}
-
 export const CpnForm: FC<CpnFormProps> = (props) => {
     const structure = props.structure.filter(v => v.isVisible !== false);
+
+    const formProps = useForm(structure, props.handleSubmit, props.isDebug);
+    const {
+        handleSubmit,
+        setFieldTouched,
+        setFieldValue,
+        isSubmitting,
+        touched,
+        errors
+    } = formProps;
 
     return (
         <div className={ClassNames({
             CpnForm: true,
             [props.className as string]: !!props.className
         })}>
-            <Formik
-                enableReinitialize
-                initialValues={structure.reduce((output: any, item) => {
-                    output[item.name] = item.defaultValue || '';
-                    return output;
-                }, {})}
-                validationSchema={Yup.object().shape(structure.reduce((output: any, item) => {
-                    if (item.validate) output[item.name] = item.validate;
-                    return output
-                }, {}))}
-                onSubmit={async (values, { setErrors, setSubmitting }) => {
-                    const isUpdateSubmitting = await props.handleSubmit(values)
-                        .catch(err => setErrors(err.errors || {}))
+            <form onSubmit={handleSubmit} className="form">
+                <div className="row">
+                    {structure.map((fieldProps, key) => {
+                        const { col, name, label, isVisible } = fieldProps;
 
-                    if (isUpdateSubmitting) setSubmitting(false);
-                }}
-            >
-                {(formProps) => {
-                    if (props.isDebug) console.log('Form debug: ', JSON.stringify(formProps, null, 4));
+                        const fieldGeneralProps = {
+                            label,
+                            onChange: (e: any) => {
+                                setFieldValue(name, e);
+                                if (fieldProps.onChange) fieldProps.onChange(e);
+                            },
+                            onFocus: () => setFieldTouched(name, true),
+                            disabled: isSubmitting || fieldProps.disabled,
+                            errorMessage: ObjectUtils.getIn(touched, name) ? ObjectUtils.getIn(errors, name) : '',
+                            defaultValue: fieldProps.defaultValue,
+                        }
 
-                    return <Form className="form">
-                        <div className="row">
-                            {structure.map((fieldProps, key) => {
-                                const { col, name, label, isVisible } = fieldProps;
+                        if (isVisible === false) return null
 
-                                const fieldGeneralProps = {
-                                    label,
-                                    onChange: (e: any) => {
-                                        formProps.setFieldValue(name, e);
-                                        if (fieldProps.onChange) fieldProps.onChange(e);
-                                    },
-                                    onFocus: () => formProps.setFieldTouched(name, true),
-                                    disabled: formProps.isSubmitting || fieldProps.disabled,
-                                    errorMessage: getIn(formProps.touched, name) ? getIn(formProps.errors, name) : '',
-                                    defaultValue: fieldProps.defaultValue,
-                                }
+                        return <div className={`col-${col || 12}`} key={key}>
+                            <CpnInput
+                                {...fieldGeneralProps}
+                                input={fieldProps.input}
+                                fieldProps={fieldProps}
+                                formProps={formProps}
+                            />
+                        </div>
+                    })}
+                </div>
 
-                                if (isVisible === false) return null
-
-                                return <div className={`col-${col || 12}`} key={key}>
-                                    <CpnInput
-                                        {...fieldGeneralProps}
-                                        input={fieldProps.input}
-                                        fieldProps={fieldProps}
-                                        formProps={formProps}
-                                    />
-                                </div>
-                            })}
+                <div className="actions">
+                    {(() => {
+                        if (isSubmitting) return <div className="loading">
+                            <CpnIcon.Loading />
                         </div>
 
-                        <div className="actions">
+                        return <Fragment>
                             {(() => {
-                                if (formProps.isSubmitting) return <div className="loading">
-                                    <CpnIcon.Loading />
-                                </div>
+                                if (!props.buttonClose || !props.buttonClose.onClick) return null
 
-                                return <Fragment>
-                                    {(() => {
-                                        if (!props.buttonClose || !props.buttonClose.onClick) return null
-
-                                        return <button
-                                            type="button"
-                                            className="buttonClose"
-                                            onClick={() => props.buttonClose && props.buttonClose.onClick ? props.buttonClose.onClick() : null}
-                                        >
-                                            {props.buttonClose.label || 'Close'}
-                                        </button>
-                                    })()}
-
-                                    <button type="submit">
-                                        {props.labelSubmit || 'Submit'}
-                                    </button>
-                                </Fragment>
+                                return <button
+                                    type="button"
+                                    className="buttonClose"
+                                    onClick={() => props.buttonClose && props.buttonClose.onClick ? props.buttonClose.onClick() : null}
+                                >
+                                    {props.buttonClose.label || 'Close'}
+                                </button>
                             })()}
-                        </div>
-                    </Form>
-                }}
-            </Formik>
+
+                            <button type="submit">
+                                {props.labelSubmit || 'Submit'}
+                            </button>
+                        </Fragment>
+                    })()}
+                </div>
+            </form>
         </div>
     )
 }
