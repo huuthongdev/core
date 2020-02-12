@@ -3,17 +3,14 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@react-google-maps/api": "^1.8.2",
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.3.2",
     "@testing-library/user-event": "^7.1.2",
-    "@toast-ui/react-editor": "^1.0.1",
     "axios": "^0.19.1",
     "express": "^4.17.1",
     "faker": "^4.1.0",
     "formik": "^2.1.2",
     "react": "^16.12.0",
-    "react-addons-css-transition-group": "^15.6.2",
     "react-datetime-picker": "^2.9.0",
     "react-dom": "^16.12.0",
     "react-dropzone": "^10.2.1",
@@ -36,7 +33,6 @@
     "@types/jest": "^24.0.0",
     "@types/node": "^12.0.0",
     "@types/react": "^16.9.0",
-    "@types/react-addons-css-transition-group": "^15.0.5",
     "@types/react-dom": "^16.9.0",
     "@types/react-redux": "^7.1.6",
     "@types/react-router-dom": "^5.1.3",
@@ -50,8 +46,9 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "sync-meete-user-web-v2": "cd ~ && rm -rf Meete/user-web-v2/modules && cp -rf Simbox/core/src/modules Meete/user-web-v2",
+    "sync-baloo-web-internal": "cd ~ && rm -rf Baloo/baloo-web-internal/src/modules && cp -rf Simbox/core/src/modules Baloo/baloo-web-internal/src",
     "sync-w": "nodemon --watch './src' -e 'ts,tsx,scss' --exec 'yarn sync'",
-    "sync": "yarn sync-meete-user-web-v2"
+    "sync": "yarn sync-meete-user-web-v2 && yarn sync-baloo-web-internal"
   },
   "eslintConfig": {
     "extends": "react-app"

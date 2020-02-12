@@ -1,4 +1,4 @@
-@import '../../modules.variables.scss';
+@import "../../modules.variables.scss";
 
 .CpnButton {
 	display: inline-flex;
@@ -20,10 +20,6 @@
 		@include btnDarkColor($dark);
 	}
 
-	&.info {
-		@include btnDarkColor($info);
-	}
-
 	&.danger {
 		@include btnDarkColor($danger);
 	}
@@ -32,12 +28,32 @@
 		@include btnDarkColor($success);
 	}
 
+	&.info {
+		@include btnDarkColor($info);
+	}
+
 	&.primary {
 		@include btnDarkColor($primary);
 	}
 
-	&.outlineDark {
+	&.dark-outline {
 		@include btnOutlineColor($dark);
+	}
+
+	&.danger-outline {
+		@include btnOutlineColor($danger);
+	}
+
+	&.success-outline {
+		@include btnOutlineColor($success);
+	}
+
+	&.info-outline {
+		@include btnOutlineColor($info);
+	}
+
+	&.primary-outline {
+		@include btnOutlineColor($primary);
 	}
 }
 

@@ -29,6 +29,10 @@
 		.loading {
 			@include btnStyle;
 			cursor: default;
+			
+			svg {
+				height: inherit;
+			}
 		}
 	}
 }

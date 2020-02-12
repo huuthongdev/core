@@ -1,7 +1,7 @@
 import React, { FC, useState, CSSProperties, SyntheticEvent } from 'react'
 
 import './CpnButton.scss';
-import { CpnIcon } from '../../refs';
+import { CpnIcon } from '../cpn-icon';
 
 type Props = {
     isVisible?: boolean,
@@ -10,14 +10,18 @@ type Props = {
     isMiddle?: boolean,
     style?: CSSProperties,
     type?: 'button' | 'submit' | 'reset',
-    buttonType?: 'danger' | 'success' | 'primary' | 'dark' | 'info' | 'outlineDark',
+    buttonType?: 'success' | 'primary' | 'info' | 'danger' | 'warning' | 'dark' |
+    'success-outline' | 'primary-outline' | 'info-outline' | 'danger-outline' | 'warning-outline' | 'dark-outline',
     isLoading?: boolean,
+    className?: string,
+    disabled?: boolean,
 }
 
-export const CpnButton: FC<Props> = ({ isVisible, label, type, onClick, isMiddle, style, buttonType, isLoading }) => {
+export const CpnButton: FC<Props> = ({ isVisible, label, type, onClick, isMiddle, style, buttonType, isLoading, className, disabled }) => {
     const [isButtonLoading, setIsButtonLoading] = useState(isLoading);
-    let className = `CpnButton ${buttonType}`;
-    if (isMiddle) className += ' middle';
+    let buttonClassName = `CpnButton ${buttonType}`;
+    if (isMiddle) buttonClassName += ' middle';
+    if (className) buttonClassName += ` ${className}`;
 
     // ============================ Functions ============================
     const handleClick = async (e?: SyntheticEvent) => {
@@ -45,11 +49,11 @@ export const CpnButton: FC<Props> = ({ isVisible, label, type, onClick, isMiddle
     return (
         <Wraper>
             {(() => {
-                if (onClick) return <button style={style} type={type} className={className} onClick={handleClick}>
+                if (onClick) return <button disabled={disabled} style={style} type={type} className={buttonClassName} onClick={handleClick}>
                     {label}
                 </button>
 
-                return <button style={style} type={type} className={className}>
+                return <button disabled={disabled} style={style} type={type} className={buttonClassName}>
                     {label}
                 </button>
             })()}

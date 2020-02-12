@@ -2,7 +2,7 @@ import React, { FC, useState, Fragment } from 'react'
 
 import { useForm } from '.';
 import { CpnIcon } from '../cpn-icon';
-import { ClassNames, ObjectUtils } from '..';
+import { ClassNames } from '..';
 
 import './CpnForm.scss';
 import { CpnInputProps, CpnFormProps } from './CpnForm.types';
@@ -13,10 +13,10 @@ const CpnInput: FC<CpnInputProps> = (props) => {
     return <div className={ClassNames({
         CpnInput: true,
         focus: isFocus,
-        hasValue: !!props.formProps.values[props.fieldProps.name],
-        [props.className as string]: !!props.className,
+        hasValue: !!props.value,
         error: props.errorMessage,
         disabled: props.disabled,
+        [props.className as string]: !!props.className,
     })}>
         {props.label ? <div className="Label">{props.label}</div> : null}
 
@@ -27,8 +27,9 @@ const CpnInput: FC<CpnInputProps> = (props) => {
                 onBlur: () => setIsFocus(false),
                 defaultValue: props.defaultValue,
                 disabled: !!props.disabled,
-                className: props.className || '',
-            }, props.formProps)}
+                getValue: props.getValue,
+                value: props.value,
+            })}
         </div>
 
         {props.errorMessage ? <div className="ErrorMessage">{props.errorMessage}</div> : null}
@@ -38,47 +39,61 @@ const CpnInput: FC<CpnInputProps> = (props) => {
 export const CpnForm: FC<CpnFormProps> = (props) => {
     const structure = props.structure.filter(v => v.isVisible !== false);
 
-    const formProps = useForm(structure, props.handleSubmit, props.isDebug);
     const {
-        handleSubmit,
-        setFieldTouched,
-        setFieldValue,
+        getError,
+        getValue,
+        handleChange,
+        handleTouched,
+        onSubmit,
         isSubmitting,
-        touched,
-        errors
-    } = formProps;
+    } = useForm({
+        structure,
+        handleSubmit: props.handleSubmit,
+        isDebug: props.isDebug
+    });
 
     return (
         <div className={ClassNames({
             CpnForm: true,
             [props.className as string]: !!props.className
         })}>
-            <form onSubmit={handleSubmit} className="form">
+            <form onSubmit={onSubmit} className="form">
                 <div className="row">
                     {structure.map((fieldProps, key) => {
-                        const { col, name, label, isVisible } = fieldProps;
+                        const { col, name, label, isVisible, disabled, onChange, defaultValue, input, isWraped } = fieldProps;
 
-                        const fieldGeneralProps = {
+                        const inputProps = {
                             label,
+                            fieldProps,
+                            defaultValue,
+                            input,
+                            disabled: isSubmitting || disabled,
+                            errorMessage: getError(name),
+                            value: getValue(name),
+                            getValue,
                             onChange: (e: any) => {
-                                setFieldValue(name, e);
-                                if (fieldProps.onChange) fieldProps.onChange(e);
+                                handleChange(name, e);
+                                if (typeof onChange === 'function') onChange(e);
                             },
-                            onFocus: () => setFieldTouched(name, true),
-                            disabled: isSubmitting || fieldProps.disabled,
-                            errorMessage: ObjectUtils.getIn(touched, name) ? ObjectUtils.getIn(errors, name) : '',
-                            defaultValue: fieldProps.defaultValue,
+                            onBlur: () => handleTouched(name),
                         }
 
                         if (isVisible === false) return null
 
+                        if (isWraped === false) return <div className={`col-${col || 12}`} key={key}>
+                            {input({
+                                onChange: (value: any) => inputProps.onChange(value),
+                                onFocus: () => false,
+                                onBlur: () => handleTouched(name),
+                                defaultValue: inputProps.defaultValue,
+                                disabled: !!inputProps.disabled,
+                                getValue: inputProps.getValue,
+                                value: getValue(name),
+                            })}
+                        </div>
+
                         return <div className={`col-${col || 12}`} key={key}>
-                            <CpnInput
-                                {...fieldGeneralProps}
-                                input={fieldProps.input}
-                                fieldProps={fieldProps}
-                                formProps={formProps}
-                            />
+                            <CpnInput {...inputProps} />
                         </div>
                     })}
                 </div>

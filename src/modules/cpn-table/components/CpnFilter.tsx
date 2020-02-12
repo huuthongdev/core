@@ -79,7 +79,6 @@ const CpnFilter: FC<Props> = ({ structure, handleChangeParams, params, isVisible
                                             handleChangeParams(key, value)
                                         }}
                                         onChangeDelay={500}
-                                        label={placeholder || 'Nhập'}
                                     />
                                 }
                             })()}

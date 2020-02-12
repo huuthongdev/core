@@ -1,43 +1,48 @@
-import { FormikProps } from "formik"
 import { ReactElement } from "react"
 import { IButtonProps } from "../types"
 
+// ======================= External =======================
 export interface ICpnFormStructureItem {
-    isVisible?: boolean,
+    input: (state: ICpnFormInput) => ReactElement,
     label: string,
     name: string,
+    isVisible?: boolean,
     col?: number,
     validate?: any,
     defaultValue?: any,
-    input: (state: ICpnFormInput, formProps: FormikProps<any>) => ReactElement,
     disabled?: boolean,
     onChange?: (value: any) => void,
+    isWraped?: boolean,
 }
 
 export interface ICpnFormInput {
     onChange: (value: any) => void,
     onFocus: () => void,
     onBlur: () => void,
+    getValue: (name: string) => any,
     defaultValue?: any,
     className?: string,
     disabled?: boolean,
+    value: any,
 }
 
+// ======================= Internal =======================
 export interface CpnInputProps {
-    onChange: (value: any) => void;
-    formProps: FormikProps<any>,
+    input: (state: ICpnFormInput) => ReactElement,
+    onChange: (value: any) => void,
+    getValue: (name: string) => any,
     fieldProps: ICpnFormStructureItem,
     defaultValue?: any,
     className?: string,
     disabled?: boolean,
-    // ============================ Input Related ============================
+    value?: any,
     label?: string,
     errorMessage?: string,
-    input: (state: ICpnFormInput, formProps: FormikProps<any>) => ReactElement,
+    getError?: (name: string) => any,
 }
 
 export interface CpnFormProps {
-    handleSubmit: (values: any) => Promise<any>,
+    handleSubmit: (values: any) => Promise<any> | void,
     structure: ICpnFormStructureItem[],
     className?: string,
     labelSubmit?: string,
