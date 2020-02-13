@@ -55,6 +55,12 @@
 	&.primary-outline {
 		@include btnOutlineColor($primary);
 	}
+
+	.icon {
+		svg {
+			height: 15px;
+		}
+	}
 }
 
 .CpnButton_Wraper_Middle {

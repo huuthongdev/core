@@ -15,9 +15,10 @@ type Props = {
     isLoading?: boolean,
     className?: string,
     disabled?: boolean,
+    icon?: () => any,
 }
 
-export const CpnButton: FC<Props> = ({ isVisible, label, type, onClick, isMiddle, style, buttonType, isLoading, className, disabled }) => {
+export const CpnButton: FC<Props> = ({ isVisible, label, type, onClick, isMiddle, style, buttonType, isLoading, className, disabled, icon }) => {
     const [isButtonLoading, setIsButtonLoading] = useState(isLoading);
     let buttonClassName = `CpnButton ${buttonType}`;
     if (isMiddle) buttonClassName += ' middle';
@@ -50,6 +51,9 @@ export const CpnButton: FC<Props> = ({ isVisible, label, type, onClick, isMiddle
         <Wraper>
             {(() => {
                 if (onClick) return <button disabled={disabled} style={style} type={type} className={buttonClassName} onClick={handleClick}>
+                    {icon ? <div className="icon">
+                        {icon()}
+                    </div> : null}
                     {label}
                 </button>
 
