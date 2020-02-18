@@ -24,6 +24,10 @@
 		@include btnDarkColor($danger);
 	}
 
+	&.warning {
+		@include btnDarkColor($warning);
+	}
+
 	&.success {
 		@include btnDarkColor($success);
 	}

@@ -31,15 +31,6 @@ export const CpnInputSelect: FC<Props> = (props) => {
     const [value, setValue] = useState(props.options.find(v => isEqual(v.value, props.defaultValue)) || props.value) as any;
     const innerRef: any = useRef(null);
 
-    useEffect(() => {
-        const item = props.options.find(v => isEqual(v.value, props.defaultValue));
-        if (item) {
-            setValue(item);
-            props.onChange(item.value);
-        }
-        // eslint-disable-next-line
-    }, [props.defaultValue, props.options])
-
     return <Select
         ref={innerRef}
         instanceId={props.label}
