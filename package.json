@@ -45,8 +45,8 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "sync-meete-user-web-v2": "cd ~ && rm -rf Meete/user-web-v2/modules && cp -rf Simbox/core/src/modules Meete/user-web-v2",
-    "sync-baloo-web-internal": "cd ~ && rm -rf Baloo/baloo-web-internal/src/modules && cp -rf Simbox/core/src/modules Baloo/baloo-web-internal/src",
+    "sync-meete-user-web-v2": "cd ~ && rm -rf Meete/user-web-v2/src/modules && cp -rf Simbox/core/src/modules Meete/user-web-v2/src/",
+    "sync-baloo-web-internal": "cd ~ && rm -rf Baloo/baloo-web-internal/src/modules && cp -rf Simbox/core/src/modules Baloo/baloo-web-internal/src/",
     "sync-w": "nodemon --watch './src' -e 'ts,tsx,scss' --exec 'yarn sync'",
     "sync": "yarn sync-meete-user-web-v2 && yarn sync-baloo-web-internal"
   },

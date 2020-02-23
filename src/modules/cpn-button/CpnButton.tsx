@@ -23,6 +23,7 @@ export const CpnButton: FC<Props> = ({ isVisible, label, type, onClick, isMiddle
     let buttonClassName = `CpnButton ${buttonType}`;
     if (isMiddle) buttonClassName += ' middle';
     if (className) buttonClassName += ` ${className}`;
+    if (isButtonLoading) buttonClassName += ` loading`;
 
     // ============================ Functions ============================
     const handleClick = async (e?: SyntheticEvent) => {
@@ -42,7 +43,7 @@ export const CpnButton: FC<Props> = ({ isVisible, label, type, onClick, isMiddle
     if (!isVisible) return null
 
     if (isButtonLoading || isLoading) return <Wraper>
-        <div style={style}>
+        <div className="CpnButton loading" style={style}>
             <CpnIcon.Loading />
         </div>
     </Wraper>
