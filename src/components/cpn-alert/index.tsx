@@ -25,15 +25,17 @@ export function CreateAlert(payload: IAlertPayload, secondTimeout: number = 4) {
     try {
         const id = Date.now();
         // ============================ Add alert ============================
-
         setAlertState((state: IAlertItem[]) => ([...state, { ...payload, id, secondTimeout }]))
+
         // ============================ Auto remove ============================
+        const onRemove = () => setAlertState((state: IAlertItem[]) => {
+            const item: any = state.find(v => v.id === id);
+            if (item && item.isHover) return state;
+            return state.filter(v => v.id !== id);
+        })
+
         if (secondTimeout) setTimeout(() => {
-            setAlertState((state: IAlertItem[]) => {
-                const item: any = state.find(v => v.id === id);
-                if (item && item.isHover) return state;
-                return state.filter(v => v.id !== id);
-            })
+            onRemove();
         }, secondTimeout * 1000);
 
     } catch (error) {
@@ -59,9 +61,7 @@ export const CpnAlert: FC = () => {
                             <div
                                 className={`CpnAlert__Item ${item.type}`}
                                 key={key}
-                                onMouseEnter={() => {
-                                    if (!item.isHover) setData(state => state.map(v => v.id === item.id ? { ...v, isHover: true } : v));
-                                }}
+                                onMouseEnter={() => { if (!item.isHover) setData(state => state.map(v => v.id === item.id ? { ...v, isHover: true } : v)) }}
                             >
                                 <div className="icon">
                                     {(() => {

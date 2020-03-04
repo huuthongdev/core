@@ -6,6 +6,7 @@ import {
     CpnForm, CpnTable, DateTimeUtils, CpnBox, CpnInputText, CpnInputCurrency,
     CpnInputPhone, CpnInputDateTime, CpnInputSelect, CpnInputSelectAsync, CpnInputFile,
 } from '../../refs'
+import { CreateAlert } from '../../components/cpn-alert'
 
 type Props = {}
 
@@ -22,6 +23,7 @@ export const DashboardScreen: FC<Props> = (props) => {
                         {
                             name: 'name',
                             label: 'Name',
+                            defaultValue: 'Jason',
                             validate: Yup.string().required('Bạn cần bổ sung.'),
                             input: (state) => <CpnInputText {...state} />,
                             col: 6
@@ -29,6 +31,7 @@ export const DashboardScreen: FC<Props> = (props) => {
                         {
                             name: 'phone',
                             label: 'Số điện thoại',
+                            defaultValue: '908508136',
                             validate: Yup.string().required('Bạn cần bổ sung.'),
                             input: (state) => <CpnInputPhone {...state} />,
                             col: 6
@@ -36,6 +39,7 @@ export const DashboardScreen: FC<Props> = (props) => {
                         {
                             name: 'price',
                             label: 'Phí duy trì',
+                            defaultValue: 12000,
                             validate: Yup.string().required('Bạn cần bổ sung.'),
                             input: (state) => <CpnInputCurrency {...state} suffix="đ" />,
                             col: 6
@@ -43,6 +47,7 @@ export const DashboardScreen: FC<Props> = (props) => {
                         {
                             name: 'birthday',
                             label: 'Ngày sinh',
+                            defaultValue: DateTimeUtils.timeToSeconds(Date.now()),
                             validate: Yup.string().required('Bạn cần bổ sung.'),
                             input: (state) => <CpnInputDateTime {...state} />,
                             col: 6
@@ -50,6 +55,7 @@ export const DashboardScreen: FC<Props> = (props) => {
                         {
                             name: 'gender',
                             label: 'Giới tính',
+                            defaultValue: 1,
                             validate: Yup.string().required('Bạn cần bổ sung.'),
                             input: (state) => <CpnInputSelect
                                 {...state}
@@ -64,6 +70,10 @@ export const DashboardScreen: FC<Props> = (props) => {
                         {
                             label: 'Thành phố',
                             name: 'city',
+                            defaultValue: {
+                                label: 'HCM',
+                                value: 1,
+                            },
                             validate: Yup.string().required('Bạn cần bổ sung.'),
                             input: (state) => <CpnInputSelectAsync
                                 {...state}
@@ -91,7 +101,6 @@ export const DashboardScreen: FC<Props> = (props) => {
                         {
                             label: 'Ảnh đại diện',
                             name: 'avatar',
-                            validate: Yup.string().required('Bạn cần bổ sung.'),
                             col: 3,
                             input: (state) => <CpnInputFile
                                 {...state}
@@ -99,9 +108,14 @@ export const DashboardScreen: FC<Props> = (props) => {
                         }
                     ]}
                     handleSubmit={() => new Promise((resolve) => {
-                        // setTimeout(() => {
-                        //     resolve(true);
-                        // }, 1000);
+                        setTimeout(() => {
+                            resolve(true);
+
+                            CreateAlert({
+                                message: 'Tạo thành công',
+                                type: 'success',
+                            })
+                        }, 200);
                     })}
                 />
             </CpnBox>

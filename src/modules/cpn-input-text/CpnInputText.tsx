@@ -1,4 +1,4 @@
-import React, { FC, useState, useEffect, BaseSyntheticEvent, useRef, useCallback } from 'react'
+import React, { FC, useState, useEffect, BaseSyntheticEvent, useRef, useCallback, useImperativeHandle } from 'react'
 
 type Props = {
     defaultValue?: string,
@@ -9,11 +9,12 @@ type Props = {
     className?: string,
     disabled?: boolean,
     placeholder?: string,
+    id?: string,
     // ============================ Input Related ============================
     onChangeDelay?: number,
 }
 
-export const CpnInputText: FC<Props> = (props) => {
+export const CpnInputText = React.forwardRef((props: Props, ref) => {
     const [, updateState] = React.useState();
     const forceUpdate = useCallback(() => updateState({}), []);
 
@@ -25,6 +26,10 @@ export const CpnInputText: FC<Props> = (props) => {
     useEffect(() => {
         setValue(props.defaultValue);
     }, [props.defaultValue])
+
+    useImperativeHandle(ref, () => ({
+        setValue,
+    }))
 
     const handleChange = (e: BaseSyntheticEvent) => {
         if (!props.onChangeDelay) {
@@ -46,6 +51,7 @@ export const CpnInputText: FC<Props> = (props) => {
     }
 
     if (props.type === 'textarea') return <textarea
+        id={props.id}
         ref={inputRef}
         value={value || ''}
         readOnly={props.disabled}
@@ -61,6 +67,7 @@ export const CpnInputText: FC<Props> = (props) => {
     />
 
     return <input
+        id={props.id}
         ref={inputRef}
         value={value || ''}
         readOnly={props.disabled}
@@ -76,7 +83,7 @@ export const CpnInputText: FC<Props> = (props) => {
         placeholder={props.placeholder}
         autoComplete="off"
     />
-}
+})
 
 CpnInputText.defaultProps = {
     disabled: false,
