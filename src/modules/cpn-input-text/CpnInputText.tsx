@@ -1,4 +1,4 @@
-import React, { FC, useState, useEffect, BaseSyntheticEvent, useRef, useCallback, useImperativeHandle } from 'react'
+import React, { useState, useEffect, BaseSyntheticEvent, useCallback, useImperativeHandle, createRef } from 'react'
 
 type Props = {
     defaultValue?: string,
@@ -19,7 +19,7 @@ export const CpnInputText = React.forwardRef((props: Props, ref) => {
     const forceUpdate = useCallback(() => updateState({}), []);
 
     const [value, setValue] = useState(props.defaultValue);
-    const inputRef: any = useRef(null);
+    const inputRef: any = createRef();
 
     let delayCheckTyping: any = null;
 
@@ -29,6 +29,7 @@ export const CpnInputText = React.forwardRef((props: Props, ref) => {
 
     useImperativeHandle(ref, () => ({
         setValue,
+        input: inputRef.current,
     }))
 
     const handleChange = (e: BaseSyntheticEvent) => {
@@ -40,9 +41,10 @@ export const CpnInputText = React.forwardRef((props: Props, ref) => {
             clearTimeout(delayCheckTyping);
             const temp = e.target.value;
             setValue(temp);
+            const input = inputRef.current;
 
             delayCheckTyping = setTimeout(() => {
-                if (inputRef.current.value === temp) {
+                if (input.value === temp) {
                     props.onChange(temp);
                     forceUpdate();
                 }
