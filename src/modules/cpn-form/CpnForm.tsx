@@ -116,7 +116,7 @@ export const CpnForm: FC<CpnFormProps> = (props) => {
                                     {props.buttonClose.label || 'Close'}
                                 </button>
                             })()}
-
+ 
                             <button type="submit">
                                 {props.labelSubmit || 'Submit'}
                             </button>

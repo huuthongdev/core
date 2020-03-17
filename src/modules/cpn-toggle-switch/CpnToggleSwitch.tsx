@@ -4,7 +4,7 @@ import './CpnToggleSwitch.scss';
 
 type Props = {
     value?: boolean,
-    onChange: (newValue: boolean) => Promise<boolean> | boolean,
+    onChange: (newValue: boolean) => Promise<any> | void,
 }
 
 export const CpnToggleSwitch: FC<Props> = (props) => {
@@ -19,8 +19,7 @@ export const CpnToggleSwitch: FC<Props> = (props) => {
         setIsLoading(true);
 
         try {
-            const isSuccess = await props.onChange(!value);
-            if (!isSuccess) setValue(value);
+            await props.onChange(!value);
         } catch (error) {
             setValue(value);
         }

@@ -1,4 +1,4 @@
-import React, { FC, FocusEventHandler, useState, useEffect, useRef } from 'react'
+import React, { FC, FocusEventHandler, useState, useRef } from 'react'
 import Select from 'react-select'
 
 import "./CpnInputSelect.scss"

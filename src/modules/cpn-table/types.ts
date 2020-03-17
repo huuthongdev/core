@@ -54,7 +54,7 @@ export interface IStructure {
     renderFull?: (value: any) => ReactElement | string,
     filter?: IFilter,
     sort?: ISort[],
-    toggleSwitch?: (currentValue: boolean) => Promise<boolean> | boolean
+    toggleSwitch?: (item: any) => Promise<any> | void
 }
 
 export interface ISearch {
@@ -74,7 +74,7 @@ export interface ITranslate {
 
 export type CpnTableProps = {
     structure: IStructure[],
-    onChange: (state: IState) => Promise<IReponse>,
+    onChange: (state: IState) => Promise<IReponse> | IReponse,
     defaultPageNumber?: number,
     itemsPerPageOptions?: number[],
     search?: ISearch,

@@ -118,7 +118,7 @@ export const CpnTable: FC<CpnTableProps> = (props) => {
                                                 if (renderFull) return renderFull(dataItem);
                                                 if (toggleSwitch) return <CpnToggleSwitch
                                                     value={!!ObjectUtils.getIn(dataItem, key)}
-                                                    onChange={toggleSwitch}
+                                                    onChange={() => toggleSwitch(dataItem)}
                                                 />
                                                 return ObjectUtils.getIn(dataItem, key)
                                             })()}

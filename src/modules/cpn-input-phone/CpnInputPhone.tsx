@@ -18,7 +18,7 @@ export const CpnInputPhone: FC<Props> = (props) => {
 
     useEffect(() => {
         setValue(props.defaultValue);
-    }, [props.defaultValue])
+    }, [props.defaultValue, setValue])
 
     return <NumberFormat
         fixedDecimalScale={false}

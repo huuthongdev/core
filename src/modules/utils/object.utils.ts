@@ -2,10 +2,10 @@ export class ObjectUtils {
     static getIn(obj: any, path: string, def?: any, convertValue?: (value: any) => void) {
         try {
             /**
-         * If the path is a string, convert it to an array
-         * @param  {String|Array} path The path
-         * @return {Array}             The path array
-         */
+        * If the path is a string, convert it to an array
+        * @param  {String|Array} path The path
+        * @return {Array}             The path array
+        */
             var stringToPath = function (path: string) {
                 // If the path isn't a string, return it
                 if (typeof path !== 'string') return path;
@@ -23,29 +23,29 @@ export class ObjectUtils {
                         }
 
                     });
+
                 });
                 return output;
+
             };
 
             // Get the path as an array
             path = stringToPath(path);
             // Cache the current object
-            var current: any = obj;
+            var current = obj || {};
+
             // For each item in the path, dig into the object
             for (var i = 0; i < path.length; i++) {
                 // If the item isn't found, return the default (or null)
-                if (typeof current[path[i]] === 'undefined') {
-                    if (convertValue) return convertValue(def);
-                    return def;
-                }
+                if (!current[path[i]]) return def;
                 // Otherwise, update the current  value
                 current = current[path[i]];
             }
 
-            if (convertValue) return convertValue(current);
-            return current || def;
+            if (current && convertValue) return convertValue(current);
+            return current;
         } catch (error) {
-            if (convertValue) return convertValue(def);
+            console.error(error);
             return def;
         }
     };
@@ -71,5 +71,12 @@ export class ObjectUtils {
 
     static isHasValue(obj: any) {
         return !ObjectUtils.isEmptyObj(obj)
+    }
+
+    static selects(obj: any, keys: string[]) {
+        return keys.reduce((acc: any, key) => {
+            acc[key] = obj[key];
+            return acc;
+        }, {})
     }
 }

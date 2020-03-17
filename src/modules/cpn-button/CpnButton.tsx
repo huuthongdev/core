@@ -3,7 +3,7 @@ import React, { FC, useState, CSSProperties, SyntheticEvent } from 'react'
 import './CpnButton.scss';
 import { CpnIcon } from '../cpn-icon';
 
-type Props = {
+export interface ICpnButton {
     isVisible?: boolean,
     label: string,
     onClick?: any,
@@ -18,7 +18,7 @@ type Props = {
     icon?: () => any,
 }
 
-export const CpnButton: FC<Props> = ({ isVisible, label, type, onClick, isMiddle, style, buttonType, isLoading, className, disabled, icon }) => {
+export const CpnButton: FC<ICpnButton> = ({ isVisible, label, type, onClick, isMiddle, style, buttonType, isLoading, className, disabled, icon }) => {
     const [isButtonLoading, setIsButtonLoading] = useState(isLoading);
     let buttonClassName = `CpnButton ${buttonType}`;
     if (isMiddle) buttonClassName += ' middle';

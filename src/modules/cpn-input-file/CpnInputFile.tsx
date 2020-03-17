@@ -8,7 +8,7 @@ import { CpnIcon } from '../cpn-icon';
 
 type Props = {
     onChange: (data: string[]) => void,
-    defaultValue?: string[],
+    defaultValue?: string[] | string,
     className?: string,
     maxLength?: number,
     // ============================ Input Related ============================
@@ -31,7 +31,10 @@ type Props = {
 }
 
 export const CpnInputFile: FC<Props> = (props) => {
-    const [files, setFiles] = useState(props.defaultValue || []);
+    const [files, setFiles] = useState((() => {
+        if (typeof props.defaultValue === 'string') return [props.defaultValue]
+        return props.defaultValue || []
+    })());
     const [isShowPopup, setIsShowPopup] = useState(false);
     const maxLength = props.maxLength || 1;
     const isMutil = maxLength > 1;

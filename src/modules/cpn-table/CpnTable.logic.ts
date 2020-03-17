@@ -95,22 +95,29 @@ export const useCpnTable = (props: CpnTableProps) => {
     }
 
     const hanldeChange = async (state: any = {}) => {
-        const pageNumberNew = state.pageNumber || pageNumber;
-        const paramsNew = state.params || params;
-        const itemsPerPageNew = state.itemsPerPage || itemsPerPage;
+        try {
+            const pageNumberNew = state.pageNumber || pageNumber;
+            const paramsNew = state.params || params;
+            const itemsPerPageNew = state.itemsPerPage || itemsPerPage;
 
-        setIsLoading(true);
+            setIsLoading(true);
 
-        setPageNumber(pageNumberNew);
-        setParams(paramsNew);
-        setItemsPerPage(itemsPerPageNew);
+            setPageNumber(pageNumberNew);
+            setParams(paramsNew);
+            setItemsPerPage(itemsPerPageNew);
 
-        await onChange(getState({ pageNumber: pageNumberNew, params: cleanObj(paramsNew), itemsPerPage: itemsPerPageNew }))
-            .then(response => {
-                setData(response.data || [])
-                setCount(response.count)
-            })
-            .catch(err => setError(err))
+            const response = await onChange(getState({
+                pageNumber: pageNumberNew,
+                params: cleanObj(Object.assign(paramsNew, itemsPerPageNew)),
+                itemsPerPage: itemsPerPageNew
+            }))
+
+            setData(response.data || [])
+            setCount(response.count)
+
+        } catch (error) {
+            setError(error)
+        }
 
         setIsLoading(false);
     }
