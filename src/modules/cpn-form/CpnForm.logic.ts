@@ -26,6 +26,12 @@ interface IUseFormProps {
     handleTouched: (name: string, status?: boolean) => void,
     onSubmit: (e?: any) => void,
     isSubmitting: boolean,
+    getFieldProps: (fieldName: string) => {
+        value: any,
+        errorMessage: string | null,
+        handleChange: (value: any) => void,
+        handleTouched: (status: boolean) => void,
+    }
 }
 
 export const useForm = (state: IUseForm): IUseFormProps => {
@@ -47,7 +53,7 @@ export const useForm = (state: IUseForm): IUseFormProps => {
             } catch (error) {
                 setErrors(error.errors || {});
             }
-            
+
             setSubmitting(false);
         }
     })
@@ -60,6 +66,12 @@ export const useForm = (state: IUseForm): IUseFormProps => {
         getValue: (name: string) => ObjectUtils.getIn(formProps.values, name, ''),
         handleChange: (name: string, value: any) => formProps.setFieldValue(name, value),
         handleTouched: (name: string, status: boolean = true) => formProps.setFieldTouched(name, status),
+        getFieldProps: (name: string) => ({
+            value: ObjectUtils.getIn(formProps.values, name, ''),
+            errorMessage: ObjectUtils.getIn(formProps.touched, name, '') ? ObjectUtils.getIn(formProps.errors, name, '') : '',
+            handleChange: (value: any) => formProps.setFieldValue(name, value),
+            handleTouched: (status: boolean = true) => formProps.setFieldTouched(name, status)
+        }),
         onSubmit: (e) => {
             try {
                 if (e) e.preventDefault();

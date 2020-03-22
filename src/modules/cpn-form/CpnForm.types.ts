@@ -28,10 +28,10 @@ export interface ICpnFormInput {
 
 // ======================= Internal =======================
 export interface CpnInputProps {
+    name: string,
     input: (state: ICpnFormInput) => ReactElement,
     onChange: (value: any) => void,
-    getValue: (name: string) => any,
-    fieldProps: ICpnFormStructureItem,
+    getValue?: (name: string) => any, 
     defaultValue?: any,
     className?: string,
     disabled?: boolean,

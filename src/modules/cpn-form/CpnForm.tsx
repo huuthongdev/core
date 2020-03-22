@@ -7,9 +7,9 @@ import { ClassNames } from '..';
 import './CpnForm.scss';
 import { CpnInputProps, CpnFormProps } from './CpnForm.types';
 
-const CpnInput: FC<CpnInputProps> = (props) => {
+export const CpnInput: FC<CpnInputProps> = (props) => {
     const [isFocus, setIsFocus] = useState(false);
-
+ 
     return <div className={ClassNames({
         CpnInput: true,
         focus: isFocus,
@@ -27,7 +27,7 @@ const CpnInput: FC<CpnInputProps> = (props) => {
                 onBlur: () => setIsFocus(false),
                 defaultValue: props.defaultValue,
                 disabled: !!props.disabled,
-                getValue: props.getValue,
+                getValue: props.getValue ? props.getValue : () => false,
                 value: props.value,
             })}
         </div>
@@ -63,6 +63,7 @@ export const CpnForm: FC<CpnFormProps> = (props) => {
                         const { col, name, label, isVisible, disabled, onChange, defaultValue, input, isWraped } = fieldProps;
 
                         const inputProps = {
+                            name,
                             label,
                             fieldProps,
                             defaultValue,
@@ -116,7 +117,7 @@ export const CpnForm: FC<CpnFormProps> = (props) => {
                                     {props.buttonClose.label || 'Close'}
                                 </button>
                             })()}
- 
+
                             <button type="submit">
                                 {props.labelSubmit || 'Submit'}
                             </button>
